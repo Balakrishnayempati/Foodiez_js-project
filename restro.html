@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Foodiez App</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
   <link rel="icon" href="https://res.cloudinary.com/dnil1xzzi/image/upload/v1743792601/2424721_vnau0b.png">
   <style>
     * {
@@ -28,11 +28,12 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      position: relative;
       flex-wrap: wrap;
     }
 
     nav h1 {
-      font-size: 28px;
+      font-size: 24px;
       display: flex;
       align-items: center;
       gap: 10px;
@@ -56,6 +57,15 @@
     nav ul li a:hover {
       background-color: white;
       color: black;
+    }
+
+    .menu-toggle {
+      display: none;
+      font-size: 24px;
+      color: white;
+      background: none;
+      border: none;
+      cursor: pointer;
     }
 
     .carousel-container {
@@ -164,32 +174,28 @@
     }
 
     .fa-instagram:hover { color: brown; }
-    .fa-facebook:hover  { color: blue; }
-    .fa-twitter:hover   { color: rgb(14, 32, 149); }
+    .fa-facebook:hover { color: blue; }
+    .fa-twitter:hover { color: rgb(14, 32, 149); }
 
-    /* MEDIA QUERIES */
-    @media (max-width: 992px) {
-      .carousel-slide img {
-        height: 400px;
-      }
-
-      .process-text h2 {
-        font-size: 24px;
-      }
-
-      .process-text ol {
-        font-size: 16px;
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: block;
       }
 
       nav ul {
-        gap: 15px;
-      }
-    }
-
-    @media (max-width: 768px) {
-      nav {
         flex-direction: column;
-        align-items: flex-start;
+        width: 100%;
+        display: none;
+        margin-top: 10px;
+      }
+
+      nav ul.show {
+        display: flex;
+      }
+
+      nav ul li {
+        width: 100%;
+        text-align: left;
       }
 
       .carousel-slide img {
@@ -198,71 +204,56 @@
 
       .food-process-section {
         flex-direction: column;
-        align-items: center;
-        text-align: center;
+        padding: 20px;
       }
 
-      .process-text,
-      .process-image {
-        max-width: 100%;
-      }
-
-      nav ul {
-        flex-direction: column;
-        gap: 10px;
-        padding-top: 10px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      nav h1 {
-        font-size: 22px;
+      .process-text, .process-image {
+        width: 100%;
       }
 
       .process-text h2 {
-        font-size: 20px;
-      }
-
-      .social-icons a {
-        font-size: 24px;
+        font-size: 22px;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- Navigation -->
   <nav>
-    <h1><img style="height: 40px;width: 40px;" src="https://res.cloudinary.com/dnil1xzzi/image/upload/v1743792601/2424721_vnau0b.png" alt="Logo"> Foodiez App</h1>
-    <ul>
+    <h1>
+      <img style="height: 40px;width: 40px;" src="https://res.cloudinary.com/dnil1xzzi/image/upload/v1743792601/2424721_vnau0b.png" alt="Logo"> 
+      Foodiez App
+    </h1>
+    <button class="menu-toggle" onclick="toggleMenu()">
+      <i class="fas fa-bars"></i>
+    </button>
+    <ul id="navLinks">
       <li><a href="#home">Home</a></li>
       <li><a href="#Browse">Details</a></li>
       <li><a href="add-restaurant.html">Add Your Restaurant</a></li>
     </ul>
   </nav>
 
-  <!-- Carousel -->
   <section id="home">
     <div class="carousel-container">
       <div class="carousel-slide" id="carouselSlide">
-        <img src="https://res.cloudinary.com/dnil1xzzi/image/upload/v1744278183/staff-cooking-in-restaurant-commercial-kitchen_eropfs.jpg" alt="makers">
-        <img src="https://res.cloudinary.com/dnil1xzzi/image/upload/v1744278184/service-1303313_1280_kaktp6.jpg" alt="kitchen">
-        <img src="https://res.cloudinary.com/dnil1xzzi/image/upload/v1744278027/resturant_workers_1-copy_ifp4sl.png" alt="Food">
+        <img src="https://res.cloudinary.com/dnil1xzzi/image/upload/v1744278183/staff-cooking-in-restaurant-commercial-kitchen_eropfs.jpg" alt="img1">
+        <img src="https://res.cloudinary.com/dnil1xzzi/image/upload/v1744278184/service-1303313_1280_kaktp6.jpg" alt="img2">
+        <img src="https://res.cloudinary.com/dnil1xzzi/image/upload/v1744278027/resturant_workers_1-copy_ifp4sl.png" alt="img3">
       </div>
       <button class="carousel-btn prev-btn" onclick="prevSlide()">❮</button>
       <button class="carousel-btn next-btn" onclick="nextSlide()">❯</button>
     </div>
   </section>
 
-  <!-- Food Process Section -->
   <section id="Browse">
     <div class="food-process-section">
       <div class="process-text">
         <h2>Follow the steps to add your restaurant dishes.</h2>
         <ol>
-          <li><strong>Step 1:</strong> Click on "Add Your Restaurant" at the top.</li>
-          <li><strong>Step 2:</strong> Fill in your restaurant dish details.</li>
-          <li><strong>Step 3:</strong> Click the submit button.</li>
+          <li><strong>Step 1: </strong> Click on add your restaurant button on top corner.</li>
+          <li><strong>Step 2: </strong> Add your restaurant dishes in details.</li>
+          <li><strong>Step 3: </strong> Click on submit button.</li>
         </ol>
       </div>
       <div class="process-image">
@@ -271,18 +262,19 @@
     </div>
   </section>
 
-  <!-- Footer -->
   <footer>
-    <h3><img src="https://res.cloudinary.com/dnil1xzzi/image/upload/v1743792601/2424721_vnau0b.png" height="40px" width="40px"> Foodiez App</h3>
+    <h3>
+      <img src="https://res.cloudinary.com/dnil1xzzi/image/upload/v1743792601/2424721_vnau0b.png" height="40px" width="40px">
+      Foodiez App
+    </h3>
     <div class="social-icons">
       <a href="#"><i class="fa-brands fa-instagram"></i></a>
       <a href="#"><i class="fa-brands fa-facebook"></i></a>
       <a href="#"><i class="fa-brands fa-twitter"></i></a>
     </div>
-    <p style="font-size:15px;margin-top: 20px;">&copy; Designed by baluyempati</p>
+    <p style="font-size:15px;margin-top: 20px;">&copy;Designed by baluyempati</p>
   </footer>
 
-  <!-- Carousel Script -->
   <script>
     const slide = document.getElementById('carouselSlide');
     const images = slide.querySelectorAll('img');
@@ -304,6 +296,10 @@
     }
 
     setInterval(nextSlide, 5000);
+
+    function toggleMenu() {
+      document.getElementById("navLinks").classList.toggle("show");
+    }
   </script>
 
 </body>
