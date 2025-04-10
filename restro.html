@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Foodiez App</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="icon" href="https://res.cloudinary.com/dnil1xzzi/image/upload/v1743792601/2424721_vnau0b.png">
   <style>
     * {
@@ -28,6 +28,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
     }
 
     nav h1 {
@@ -57,7 +58,6 @@
       color: black;
     }
 
-    /* Carousel */
     .carousel-container {
       position: relative;
       width: 100%;
@@ -99,74 +99,49 @@
       right: 10px;
     }
 
-    /* footer {
-      background-color: #010101;
-      color: white;
-      padding: 20px 30px;
-      margin-top: auto;
-      text-align: center;
-    }
-
-    footer .socials {
-      margin-top: 10px;
-    }
-
-    footer .socials a {
-      color: white;
-      margin: 0 10px;
-      text-decoration: none;
-      font-size: 20px;
-      transition: 0.3s;
-    }
-
-    footer .socials a:hover {
-      color: #e63946;
-    } */
-
     .food-process-section {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 40px 30px;
-  gap: 30px;
-  background-color: #fff;
-  margin: 30px 0;
-  flex-wrap: wrap;
-}
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 40px 30px;
+      gap: 30px;
+      background-color: #fff;
+      margin: 30px 0;
+      flex-wrap: wrap;
+    }
 
-.process-text {
-  flex: 1;
-  min-width: 300px;
-}
+    .process-text {
+      flex: 1;
+      min-width: 300px;
+    }
 
-.process-text h2 {
-  font-size: 28px;
-  color: #e63946;
-  margin-bottom: 20px;
-}
+    .process-text h2 {
+      font-size: 28px;
+      color: #e63946;
+      margin-bottom: 20px;
+    }
 
-.process-text ol {
-  list-style-position: inside;
-  font-size: 18px;
-  color: #333;
-}
+    .process-text ol {
+      list-style-position: inside;
+      font-size: 18px;
+      color: #333;
+    }
 
-.process-text li {
-  margin-bottom: 15px;
-}
+    .process-text li {
+      margin-bottom: 15px;
+    }
 
-.process-image {
-  flex: 1;
-  min-width: 300px;
-}
+    .process-image {
+      flex: 1;
+      min-width: 300px;
+    }
 
-.process-image img {
-  width: 100%;
-  height: auto;
-  border-radius: 15px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
+    .process-image img {
+      width: 100%;
+      height: auto;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
 
     footer {
       background: #0b0b0b;
@@ -176,27 +151,39 @@
       font-size: 20px;
       margin-top: 20px;
     }
+
     .social-icons {
       margin-top: 15px;
     }
+
     .social-icons a {
       margin: 0 10px;
       color: #f1faee;
       font-size: 30px;
       text-decoration: none;
+    }
 
-    }
-    .fa-instagram:hover
-    {
-        color: brown;
-    }
-    .fa-facebook:hover
-    {
-        color: blue;
-    }
-    .fa-twitter:hover
-    {
-        color: rgb(14, 32, 149);
+    .fa-instagram:hover { color: brown; }
+    .fa-facebook:hover  { color: blue; }
+    .fa-twitter:hover   { color: rgb(14, 32, 149); }
+
+    /* MEDIA QUERIES */
+    @media (max-width: 992px) {
+      .carousel-slide img {
+        height: 400px;
+      }
+
+      .process-text h2 {
+        font-size: 24px;
+      }
+
+      .process-text ol {
+        font-size: 16px;
+      }
+
+      nav ul {
+        gap: 15px;
+      }
     }
 
     @media (max-width: 768px) {
@@ -208,7 +195,37 @@
       .carousel-slide img {
         height: 250px;
       }
-      
+
+      .food-process-section {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .process-text,
+      .process-image {
+        max-width: 100%;
+      }
+
+      nav ul {
+        flex-direction: column;
+        gap: 10px;
+        padding-top: 10px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      nav h1 {
+        font-size: 22px;
+      }
+
+      .process-text h2 {
+        font-size: 20px;
+      }
+
+      .social-icons a {
+        font-size: 24px;
+      }
     }
   </style>
 </head>
@@ -220,51 +237,49 @@
     <ul>
       <li><a href="#home">Home</a></li>
       <li><a href="#Browse">Details</a></li>
-      <li><a href="add-restaurant.html">Add Your Resturant</a></li>
+      <li><a href="add-restaurant.html">Add Your Restaurant</a></li>
     </ul>
   </nav>
 
   <!-- Carousel -->
-   <section id="home">
-  <div class="carousel-container">
-    <div class="carousel-slide" id="carouselSlide">
-      <img src="https://res.cloudinary.com/dnil1xzzi/image/upload/v1744278183/staff-cooking-in-restaurant-commercial-kitchen_eropfs.jpg" alt="makers">
-      <img src="https://res.cloudinary.com/dnil1xzzi/image/upload/v1744278184/service-1303313_1280_kaktp6.jpg" alt="kitchen">
-      <img src="https://res.cloudinary.com/dnil1xzzi/image/upload/v1744278027/resturant_workers_1-copy_ifp4sl.png" alt="Food">
+  <section id="home">
+    <div class="carousel-container">
+      <div class="carousel-slide" id="carouselSlide">
+        <img src="https://res.cloudinary.com/dnil1xzzi/image/upload/v1744278183/staff-cooking-in-restaurant-commercial-kitchen_eropfs.jpg" alt="makers">
+        <img src="https://res.cloudinary.com/dnil1xzzi/image/upload/v1744278184/service-1303313_1280_kaktp6.jpg" alt="kitchen">
+        <img src="https://res.cloudinary.com/dnil1xzzi/image/upload/v1744278027/resturant_workers_1-copy_ifp4sl.png" alt="Food">
+      </div>
+      <button class="carousel-btn prev-btn" onclick="prevSlide()">❮</button>
+      <button class="carousel-btn next-btn" onclick="nextSlide()">❯</button>
     </div>
-    <button class="carousel-btn prev-btn" onclick="prevSlide()">❮</button>
-    <button class="carousel-btn next-btn" onclick="nextSlide()">❯</button>
-  </div>
-</section>
-
+  </section>
 
   <!-- Food Process Section -->
-   <section id="Browse">
-<div class="food-process-section">
-    <div class="process-text">
-      <h2>Follow the steps to add your restaurant dishes.</h2>
-      <ol>
-        <li><strong>Step 1: </strong> Click on add your resturant button on top corner.</li>
-        <li><strong>Step 2: </strong> Add your restaurant dishes in details.</li>
-        <li><strong>Step 3: </strong> Click on submit button.</li>
-      </ol>
+  <section id="Browse">
+    <div class="food-process-section">
+      <div class="process-text">
+        <h2>Follow the steps to add your restaurant dishes.</h2>
+        <ol>
+          <li><strong>Step 1:</strong> Click on "Add Your Restaurant" at the top.</li>
+          <li><strong>Step 2:</strong> Fill in your restaurant dish details.</li>
+          <li><strong>Step 3:</strong> Click the submit button.</li>
+        </ol>
+      </div>
+      <div class="process-image">
+        <img src="https://res.cloudinary.com/dnil1xzzi/image/upload/v1744278028/How-many-3-star-Michelin-restaurants-in-the-world-768x434_rldjyx.webp" alt="Food Process">
+      </div>
     </div>
-    <div class="process-image">
-      <img src="https://res.cloudinary.com/dnil1xzzi/image/upload/v1744278028/How-many-3-star-Michelin-restaurants-in-the-world-768x434_rldjyx.webp" alt="Food Process">
-    </div>
-  </div>
-</section>
+  </section>
 
   <!-- Footer -->
   <footer>
     <h3><img src="https://res.cloudinary.com/dnil1xzzi/image/upload/v1743792601/2424721_vnau0b.png" height="40px" width="40px"> Foodiez App</h3>
-    
     <div class="social-icons">
       <a href="#"><i class="fa-brands fa-instagram"></i></a>
       <a href="#"><i class="fa-brands fa-facebook"></i></a>
       <a href="#"><i class="fa-brands fa-twitter"></i></a>
     </div>
-    <p style="font-size:15px;margin-top: 20px;">&copy;Designed by baluyempati</p>
+    <p style="font-size:15px;margin-top: 20px;">&copy; Designed by baluyempati</p>
   </footer>
 
   <!-- Carousel Script -->
@@ -288,7 +303,6 @@
       showSlide(currentIndex);
     }
 
-    // Optional: Auto slide every 5 seconds
     setInterval(nextSlide, 5000);
   </script>
 
