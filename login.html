@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foodiez - Login</title>
+    <link rel="icon" href="https://res.cloudinary.com/dnil1xzzi/image/upload/v1743792601/2424721_vnau0b.png" type="image/x-icon">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c);
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 350px;
+        }
+
+        .logo {
+            width: 120px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #e63946;
+            margin-bottom: 10px;
+        }
+
+        input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #e63946;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #d62828;
+        }
+
+        a {
+            text-decoration: none;
+            color: #457b9d;
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+
+        a:hover {
+            color: #1d3557;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <img src="https://res.cloudinary.com/dnil1xzzi/image/upload/v1743792601/2424721_vnau0b.png" alt="Foodiez Logo" class="logo" />
+    <h1>Login to Foodiez</h1>
+    <input type="email" id="loginEmail" placeholder="Email" />
+    <input type="password" id="loginPassword" placeholder="Password" />
+    <button id="loginBtn">Login</button>
+    <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+    <p><a href="#" id="forgotPasswordLink">Forgot Password?</a></p>
+</div>
+
+<script type="module">
+    // import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    // import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+    // const firebaseConfig = {
+    //     apiKey: "AIzaSyB02JOyypkO4X7te9bHl7QuTsvY82SjOu0",
+    //     authDomain: "foodeiz.firebaseapp.com",
+    //     projectId: "foodeiz",
+    //     storageBucket: "foodeiz.firebasestorage.app",
+    //     messagingSenderId: "955078569126",
+    //     appId: "1:955078569126:web:3f4ae85e6aee546e611867",
+    //     measurementId: "G-39QZC2NB1E"
+    // };
+
+    // const app = initializeApp(firebaseConfig);
+    // const auth = getAuth(app);
+
+    // document.getElementById("loginBtn").addEventListener("click", () => {
+    //     const email = document.getElementById("loginEmail").value;
+    //     const password = document.getElementById("loginPassword").value;
+
+    //     signInWithEmailAndPassword(auth, email, password)
+    //         .then((userCredential) => {
+    //             alert("Login successful!");
+    //             console.log(userCredential.user);
+
+    //             window.location.href="dashboard.html"
+    //         })
+    //         .catch((error) => {
+    //             alert(`Login failed: ${error.message}`);
+    //             console.error(error);
+    //         });
+    // });
+
+    // document.getElementById("forgotPasswordLink").addEventListener("click", () => {
+    //     const email = prompt("Enter your email to reset password:");
+    //     if (email) {
+    //         sendPasswordResetEmail(auth, email)
+    //             .then(() => {
+    //                 alert("Password reset email sent successfully!");
+    //             })
+    //             .catch((error) => {
+    //                 alert(`Error sending password reset email: ${error.message}`);
+    //                 console.error(error);
+    //             });
+    //     }
+    // });
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+// 🔐 Firebase Configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyB02JOyypkO4X7te9bHl7QuTsvY82SjOu0",
+    authDomain: "foodeiz.firebaseapp.com",
+    projectId: "foodeiz",
+    storageBucket: "foodeiz.firebasestorage.app",
+    messagingSenderId: "955078569126",
+    appId: "1:955078569126:web:3f4ae85e6aee546e611867",
+    measurementId: "G-39QZC2NB1E"
+};
+
+// 🔌 Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+// ✅ Login Functionality
+document.getElementById("loginBtn").addEventListener("click", () => {
+    const email = document.getElementById("loginEmail").value;
+    const password = document.getElementById("loginPassword").value;
+
+    signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            alert("Login successful!");
+            console.log(userCredential.user);
+            window.location.href = "restro.html";
+        })
+        .catch((error) => {
+            alert(`Login failed: ${error.message}`);
+            console.error(error);
+        });
+});
+
+// 🔁 Forgot Password Functionality
+document.getElementById("forgotPasswordLink").addEventListener("click", () => {
+    const email = prompt("Enter your email to reset password:");
+    if (email) {
+        sendPasswordResetEmail(auth, email)
+            .then(() => {
+                alert("Password reset email sent successfully!");
+            })
+            .catch((error) => {
+                if (error.code === "auth/user-not-found") {
+                    alert("No user found with this email address.");
+                } else if (error.code === "auth/invalid-email") {
+                    alert("Invalid email address.");
+                } else {
+                    alert(`Error: ${error.message}`);
+                }
+                console.error(error);
+            });
+    }
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foodiez - Sign Up</title>
+    <link rel="icon" href="https://res.cloudinary.com/dnil1xzzi/image/upload/v1743792601/2424721_vnau0b.png" type="image/x-icon">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: url('') no-repeat center center fixed;
+            background: linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c);
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 350px;
+        }
+
+        .logo {
+            width: 120px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #e63946;
+            margin-bottom: 10px;
+        }
+
+        input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #e63946;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #d62828;
+        }
+
+        a {
+            text-decoration: none;
+            color: #457b9d;
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+
+        a:hover {
+            color: #1d3557;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <img src="https://res.cloudinary.com/dnil1xzzi/image/upload/v1743792601/2424721_vnau0b.png" alt="Foodiez Logo" class="logo" />
+    <h1>Sign Up for Foodiez</h1>
+    <input type="email" id="signupEmail" placeholder="Email" />
+    <input type="password" id="signupPassword" placeholder="Password" />
+    <button id="signupBtn">Sign Up</button>
+    <p>Already have an account? <a href="login.html">Login here</a></p>
+    <button style="background-color: #3f87a6;" type="button"><a style="color: white;" href="dashboard.html">Login as a Guest</a></button>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyB02JOyypkO4X7te9bHl7QuTsvY82SjOu0",
+        authDomain: "foodeiz.firebaseapp.com",
+        projectId: "foodeiz",
+        storageBucket: "foodeiz.firebasestorage.app",
+        messagingSenderId: "955078569126",
+        appId: "1:955078569126:web:3f4ae85e6aee546e611867",
+        measurementId: "G-39QZC2NB1E"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    document.getElementById("signupBtn").addEventListener("click", () => {
+        const email = document.getElementById("signupEmail").value;
+        const password = document.getElementById("signupPassword").value;
+
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                alert("Signup successful!");
+                console.log(userCredential.user);
+            })
+            .catch((error) => {
+                alert(`Signup failed: ${error.message}`);
+                console.error(error);
+            });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,354 @@
+<!-- dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Foodiez - Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+  <link rel="icon" href="https://res.cloudinary.com/dnil1xzzi/image/upload/v1743792601/2424721_vnau0b.png" type="image/x-icon">
+  <style>
+     * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f8f9fa, #87abcf);
+      color: #333;
+    }
+    /* Navbar */
+    .navbar {
+      background: #000028;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      flex-wrap: wrap;
+    }
+    .navbar a, .navbar button {
+      color: #f1faee;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 5px 10px;
+      padding: 10px 15px;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+    .navbar a:hover, .navbar button:hover {
+      background: #ffffff;
+      color: black;
+    }
+    .navbar button {
+      background: #457b9d;
+      border: none;
+      cursor: pointer;
+    }
+    .navbar button.logout {
+      background: #d62828;
+    }
+    /* Hamburger Menu */
+    .menu-icon {
+      display: none;
+      cursor: pointer;
+      font-size: 1.8rem;
+      color: #f1faee;
+    }
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .nav-links a {
+      display: inline-block;
+    }
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 100px 20px 20px;
+      margin-top: 20px; /* space for navbar */
+    }
+    .hero h1 {
+      color: #e63946;
+      font-size: 2.5rem;
+    }
+    .hero p {
+      color: #495057;
+      font-size: 1.2rem;
+      margin: 10px 0;
+    }
+    .hero button {
+      background: #e63946;
+      color: white;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .hero button:hover {
+      background: #d62828;
+    }
+    /* Featured Foods Section */
+    .featured-foods {
+      width: 90%;
+      max-width: 1200px;
+      margin: 30px auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .food-card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .food-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+    .food-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    .food-card img:hover {
+      transform: scale(1.05);
+    }
+    .food-card .card-content {
+      padding: 15px;
+    }
+    .food-card h3 {
+      color: #e63946;
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+    .food-card p {
+      color: #495057;
+      font-size: 0.95rem;
+    }
+    /* Carousel Styles */
+    .carousel {
+      width: 90%;
+      max-width: 800px;
+      margin: 30px auto;
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+    .carousel-inner {
+      display: flex;
+      transition: transform 0.5s ease;
+    }
+    .carousel-inner img {
+      width: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    .carousel-inner img:hover {
+      transform: scale(1.1);
+    }
+    .carousel-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+      z-index: 10;
+    }
+    .carousel-prev {
+      left: 10px;
+    }
+    .carousel-next {
+      right: 10px;
+    }
+    /* Features Section */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+    .feature-card {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+    .feature-card h3 {
+      color: #e63946;
+      margin-bottom: 10px;
+    }
+    .feature-card p {
+      color: #495057;
+      margin-bottom: 15px;
+    }
+    .feature-card button {
+      background: #457b9d;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .feature-card button:hover {
+      background: #1d3557;
+    }
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        text-align: center;
+      }
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+      }
+      .menu-icon {
+        display: block;
+      }
+      .nav-links.active {
+        display: flex;
+      }
+    }
+    @media (max-width: 480px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+      .hero p {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="menu-icon" onclick="toggleMenu()">☰</div>
+    <div class="nav-links" id="navLinks">
+      <a href="dashboard.html">Home</a>
+      <a href="favorites.html">Manage Favorites</a>
+      <a href="browse-recipes.html">Restaurants Foods</a>
+      <a href="recipe-dictionary.html">Recipe Dictionary</a>
+      <a href="food-ordering.html">Food Ordering</a>
+      <a href="shopping-cart.html">Shopping Cart</a>
+      <a href="order-history.html">Order History</a>
+      <button class="logout" onclick="logout()">Logout</button>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <div class="hero">
+    <marquee direction="right"><h2>Instant delivery app <i class="fa-solid fa-truck" style="color: red;"></i></h2></marquee>
+    <h1>Welcome to Foodiez App!</h1>
+    <p>Your ultimate hub for recipes, food ordering, and shopping.</p>
+  </div>
+
+  <!-- Featured Foods Section -->
+  <!-- (Keep your existing featured-foods section here) -->
+
+  <!-- Carousel Section -->
+  <!-- (Keep your existing carousel section here) -->
+
+  <!-- Features Section -->
+  <div class="features">
+    <div class="feature-card">
+      <h3>Add your Restaurant Details</h3>
+      <p>Submit and manage your restaurant menu to customers.</p>
+      <button onclick="navigateTo('add-restaurant.html')">Add Your Resturant</button>
+    </div>
+    <!-- <div class="feature-card">
+      <h3>Recipe Dictionary</h3>
+      <p>Learn about ingredients, cooking tips, and more.</p>
+      <button onclick="navigateTo('recipe-dictionary.html')">Explore Now</button>
+    </div>
+    <div class="feature-card">
+      <h3>Browse Recipes</h3>
+      <p>Discover new recipes to try at home.</p>
+      <button onclick="navigateTo('browse-recipes.html')">View Recipes</button>
+    </div>
+    <div class="feature-card">
+      <h3>Food Ordering</h3>
+      <p>Order from your favorite restaurants.</p>
+      <button onclick="navigateTo('food-ordering.html')">Order Now</button>
+    </div>
+    <div class="feature-card">
+      <h3>Shopping Cart</h3>
+      <p>Add items, update your cart, and checkout.</p>
+      <button onclick="navigateTo('shopping-cart.html')">Go to Cart</button>
+    </div>
+    <div class="feature-card">
+      <h3>Saved Recipes</h3>
+      <p>Manage and view your favorite recipes.</p>
+      <button onclick="navigateTo('favorites.html')">Manage Favorites</button>
+    </div>
+    <div class="feature-card">
+      <h3>Order History</h3>
+      <p>Track your past orders and manage them.</p>
+      <button onclick="navigateTo('order-history.html')">View History</button>
+    </div> -->
+  </div>
+
+  <!-- Script -->
+  <script>
+    function navigateTo(page) {
+      window.location.href = page;
+    }
+    function logout() {
+      alert("You have been logged out!");
+      window.location.href = "index.html";
+    }
+    function toggleMenu() {
+      const navLinks = document.getElementById("navLinks");
+      navLinks.classList.toggle("active");
+    }
+
+    // Carousel functionality
+    const carouselInner = document.getElementById("carouselInner");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const totalSlides = carouselInner.children.length;
+    let currentIndex = 0;
+
+    function updateCarousel() {
+      const offset = -currentIndex * 100;
+      carouselInner.style.transform = `translateX(${offset}%)`;
+    }
+
+    prevBtn.addEventListener("click", () => {
+      currentIndex = (currentIndex === 0) ? totalSlides - 1 : currentIndex - 1;
+      updateCarousel();
+    });
+
+    nextBtn.addEventListener("click", () => {
+      currentIndex = (currentIndex + 1) % totalSlides;
+      updateCarousel();
+    });
+  </script>
+
+</body>
+</html>

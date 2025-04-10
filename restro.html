@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Foodiez App</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="icon" href="https://res.cloudinary.com/dnil1xzzi/image/upload/v1743792601/2424721_vnau0b.png">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: #f8f9fa;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    nav {
+      background-color: #010101;
+      color: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav h1 {
+      font-size: 28px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 8px 12px;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+
+    nav ul li a:hover {
+      background-color: white;
+      color: black;
+    }
+
+    /* Carousel */
+    .carousel-container {
+      position: relative;
+      width: 100%;
+      max-height: 600px;
+      overflow: hidden;
+      margin: 20px auto;
+    }
+
+    .carousel-slide {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .carousel-slide img {
+      width: 100vw;
+      height: 500px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(0,0,0,0.5);
+      border: none;
+      color: white;
+      font-size: 24px;
+      padding: 10px 15px;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .prev-btn {
+      left: 10px;
+    }
+
+    .next-btn {
+      right: 10px;
+    }
+
+    /* footer {
+      background-color: #010101;
+      color: white;
+      padding: 20px 30px;
+      margin-top: auto;
+      text-align: center;
+    }
+
+    footer .socials {
+      margin-top: 10px;
+    }
+
+    footer .socials a {
+      color: white;
+      margin: 0 10px;
+      text-decoration: none;
+      font-size: 20px;
+      transition: 0.3s;
+    }
+
+    footer .socials a:hover {
+      color: #e63946;
+    } */
+
+    .food-process-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 30px;
+  gap: 30px;
+  background-color: #fff;
+  margin: 30px 0;
+  flex-wrap: wrap;
+}
+
+.process-text {
+  flex: 1;
+  min-width: 300px;
+}
+
+.process-text h2 {
+  font-size: 28px;
+  color: #e63946;
+  margin-bottom: 20px;
+}
+
+.process-text ol {
+  list-style-position: inside;
+  font-size: 18px;
+  color: #333;
+}
+
+.process-text li {
+  margin-bottom: 15px;
+}
+
+.process-image {
+  flex: 1;
+  min-width: 300px;
+}
+
+.process-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+
+    footer {
+      background: #0b0b0b;
+      color: #f1faee;
+      padding: 5px 20px;
+      text-align: center;
+      font-size: 20px;
+      margin-top: 20px;
+    }
+    .social-icons {
+      margin-top: 15px;
+    }
+    .social-icons a {
+      margin: 0 10px;
+      color: #f1faee;
+      font-size: 30px;
+      text-decoration: none;
+
+    }
+    .fa-instagram:hover
+    {
+        color: brown;
+    }
+    .fa-facebook:hover
+    {
+        color: blue;
+    }
+    .fa-twitter:hover
+    {
+        color: rgb(14, 32, 149);
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .carousel-slide img {
+        height: 250px;
+      }
+      
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <h1><img style="height: 40px;width: 40px;" src="https://res.cloudinary.com/dnil1xzzi/image/upload/v1743792601/2424721_vnau0b.png" alt="Logo"> Foodiez App</h1>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#Browse">Details</a></li>
+      <li><a href="add-restaurant.html">Add Your Resturant</a></li>
+    </ul>
+  </nav>
+
+  <!-- Carousel -->
+   <section id="home">
+  <div class="carousel-container">
+    <div class="carousel-slide" id="carouselSlide">
+      <img src="https://res.cloudinary.com/dnil1xzzi/image/upload/v1744278183/staff-cooking-in-restaurant-commercial-kitchen_eropfs.jpg" alt="makers">
+      <img src="https://res.cloudinary.com/dnil1xzzi/image/upload/v1744278184/service-1303313_1280_kaktp6.jpg" alt="kitchen">
+      <img src="https://res.cloudinary.com/dnil1xzzi/image/upload/v1744278027/resturant_workers_1-copy_ifp4sl.png" alt="Food">
+    </div>
+    <button class="carousel-btn prev-btn" onclick="prevSlide()">❮</button>
+    <button class="carousel-btn next-btn" onclick="nextSlide()">❯</button>
+  </div>
+</section>
+
+
+  <!-- Food Process Section -->
+   <section id="Browse">
+<div class="food-process-section">
+    <div class="process-text">
+      <h2>Follow the steps to add your restaurant dishes.</h2>
+      <ol>
+        <li><strong>Step 1: </strong> Click on add your resturant button on top corner.</li>
+        <li><strong>Step 2: </strong> Add your restaurant dishes in details.</li>
+        <li><strong>Step 3: </strong> Click on submit button.</li>
+      </ol>
+    </div>
+    <div class="process-image">
+      <img src="https://res.cloudinary.com/dnil1xzzi/image/upload/v1744278028/How-many-3-star-Michelin-restaurants-in-the-world-768x434_rldjyx.webp" alt="Food Process">
+    </div>
+  </div>
+</section>
+
+  <!-- Footer -->
+  <footer>
+    <h3><img src="https://res.cloudinary.com/dnil1xzzi/image/upload/v1743792601/2424721_vnau0b.png" height="40px" width="40px"> Foodiez App</h3>
+    
+    <div class="social-icons">
+      <a href="#"><i class="fa-brands fa-instagram"></i></a>
+      <a href="#"><i class="fa-brands fa-facebook"></i></a>
+      <a href="#"><i class="fa-brands fa-twitter"></i></a>
+    </div>
+    <p style="font-size:15px;margin-top: 20px;">&copy;Designed by baluyempati</p>
+  </footer>
+
+  <!-- Carousel Script -->
+  <script>
+    const slide = document.getElementById('carouselSlide');
+    const images = slide.querySelectorAll('img');
+    let currentIndex = 0;
+
+    function showSlide(index) {
+      const width = images[0].clientWidth;
+      slide.style.transform = `translateX(${-width * index}px)`;
+    }
+
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % images.length;
+      showSlide(currentIndex);
+    }
+
+    function prevSlide() {
+      currentIndex = (currentIndex - 1 + images.length) % images.length;
+      showSlide(currentIndex);
+    }
+
+    // Optional: Auto slide every 5 seconds
+    setInterval(nextSlide, 5000);
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manage Favorites - Foodiez</title>
+  <link rel="icon" href="https://res.cloudinary.com/dnil1xzzi/image/upload/v1743792601/2424721_vnau0b.png" type="image/x-icon">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f8f9fa;
+      padding: 0;
+      color: #333;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: #1d3557;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      flex-wrap: wrap;
+    }
+
+    .navbar a, .navbar button {
+      color: #f1faee;
+      text-decoration: none;
+      font-weight: bold;
+      margin: 5px 10px;
+      padding: 10px 15px;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+
+    .navbar a:hover, .navbar button:hover {
+      background: #e63946;
+    }
+
+    .navbar button {
+      background: #457b9d;
+      border: none;
+      cursor: pointer;
+    }
+
+    .navbar button.logout {
+      background: #d62828;
+    }
+
+    /* Main Content */
+    .container {
+      padding: 100px 20px 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    h1 {
+      color: #e63946;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .favorites-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .favorite-card {
+      background: white;
+      padding: 15px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+
+    .favorite-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .favorite-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .favorite-card h3 {
+      color: #e63946;
+      margin: 10px 0 5px;
+    }
+
+    .favorite-card p {
+      color: #495057;
+      font-size: 14px;
+      margin: 3px 0;
+    }
+
+    .remove-btn, .order-btn {
+      padding: 8px 15px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-top: 10px;
+      margin-right: 5px;
+    }
+
+    .remove-btn {
+      background: #d62828;
+      color: white;
+    }
+
+    .remove-btn:hover {
+      background: #e63946;
+    }
+
+    .order-btn {
+      background: #2a9d8f;
+      color: white;
+    }
+
+    .order-btn:hover {
+      background: #21867a;
+    }
+
+    .empty-message {
+      text-align: center;
+      font-size: 1.2rem;
+      color: #495057;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <a href="dashboard.html">Home</a>
+    <a href="favorites.html">Manage Favorites</a>
+    <a href="browse-recipes.html">Restaurant Foods</a>
+    <a href="recipe-dictionary.html">Recipe Dictionary</a>
+    <a href="food-ordering.html">Food Ordering</a>
+    <a href="shopping-cart.html">Shopping Cart</a>
+    <a href="order-history.html">Order History</a>
+    <button class="logout" onclick="logout()">Logout</button>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container">
+    <h1>Your Favorite Recipes</h1>
+    <div class="favorites-list" id="favoritesList"></div>
+    <div id="emptyMessage" class="empty-message"></div>
+  </div>
+
+  <script>
+    let favorites = JSON.parse(localStorage.getItem("favoriteItems")) || [];
+
+    function displayFavorites() {
+      const favoritesList = document.getElementById("favoritesList");
+      const emptyMessage = document.getElementById("emptyMessage");
+
+      favoritesList.innerHTML = "";
+
+      if (favorites.length === 0) {
+        emptyMessage.innerHTML = "You have no favorite recipes yet!";
+        return;
+      }
+
+      emptyMessage.innerHTML = "";
+
+      favorites.forEach((item, index) => {
+        const card = document.createElement("div");
+        card.className = "favorite-card";
+
+        card.innerHTML = `
+          <img src="${item.image}" alt="${item.type}">
+          <h3>${item.type}</h3>
+          <p>${item.description}</p>
+          <p>📍 ${item.location}</p>
+          <p>💵 ₹${item.price}</p>
+          <p>⭐ ${item.rating}</p>
+          <button class="remove-btn" onclick="removeFavorite(${index})">Remove from Favorites</button>
+          <button class="order-btn" onclick="orderNow(${index})">Order Now</button>
+        `;
+
+        favoritesList.appendChild(card);
+      });
+    }
+
+    function removeFavorite(index) {
+      favorites.splice(index, 1);
+      localStorage.setItem("favoriteItems", JSON.stringify(favorites));
+      displayFavorites();
+    }
+
+    function orderNow(index) {
+      const selectedItem = favorites[index];
+      localStorage.setItem("currentOrder", JSON.stringify(selectedItem));
+      window.location.href = "food-ordering.html";
+    }
+
+    function logout() {
+      alert("You have been logged out!");
+      window.location.href = "index.html";
+    }
+
+    displayFavorites();
+  </script>
+
+</body>
+</html>

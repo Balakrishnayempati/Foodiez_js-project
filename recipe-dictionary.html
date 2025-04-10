@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Dictionary - Foodiez</title>
+    <link rel="icon" href="https://res.cloudinary.com/dnil1xzzi/image/upload/v1743792601/2424721_vnau0b.png" type="image/x-icon">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f8f9fa;
+            padding: 0;
+            color: #333;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: #1d3557;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            flex-wrap: wrap;
+        }
+
+        .navbar a, .navbar button {
+            color: #f1faee;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 5px 10px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .navbar a:hover, .navbar button:hover {
+            background: #e63946;
+        }
+
+        .navbar button {
+            background: #457b9d;
+            border: none;
+            cursor: pointer;
+        }
+
+        .navbar button.logout {
+            background: #d62828;
+        }
+
+        /* Main Content */
+        .container {
+            padding: 100px 20px 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        h1 {
+            color: #e63946;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .search-bar {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .search-bar input {
+            width: 80%;
+            padding: 10px;
+            border: 2px solid #1d3557;
+            border-radius: 5px;
+        }
+
+        .recipe-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .recipe-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .recipe-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .recipe-card h3 {
+            color: #e63946;
+            margin-bottom: 10px;
+        }
+
+        .recipe-card p {
+            color: #495057;
+            font-size: 14px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .search-bar input {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<div class="navbar">
+    <a href="dashboard.html">Home</a>
+    <a href="favorites.html">Manage Favorites</a>
+    <a href="browse-recipes.html">Browse Recipes</a>
+    <a href="recipe-dictionary.html">Recipe Dictionary</a>
+    <a href="food-ordering.html">Food Ordering</a>
+    <a href="shopping-cart.html">Shopping Cart</a>
+    <a href="order-history.html">Order History</a>
+    <button class="logout" onclick="logout()">Logout</button>
+</div>
+
+<!-- Main Content -->
+<div class="container">
+    <h1>Recipe Dictionary</h1>
+
+    <!-- Search Bar -->
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search for recipes..." onkeyup="filterRecipes()">
+    </div>
+
+    <!-- Recipe List -->
+    <div class="recipe-list" id="recipeList"></div>
+</div>
+
+<script>
+    const recipes = [
+        { name: "Spaghetti Carbonara", description: "A classic Italian pasta dish with eggs, cheese, pancetta, and pepper." },
+        { name: "Chicken Tikka", description: "Spicy grilled chicken marinated in yogurt and spices." },
+        { name: "Veggie Salad", description: "Fresh vegetables with a light, tangy vinaigrette." },
+        { name: "Pancakes", description: "Fluffy, golden pancakes served with syrup and butter." },
+        { name: "Beef Stroganoff", description: "Creamy beef dish with mushrooms, onions, and sour cream." },
+        { name: "Tomato Soup", description: "Warm, comforting soup made with fresh tomatoes and herbs." }
+    ];
+
+    function displayRecipes(filteredRecipes = recipes) {
+        const recipeList = document.getElementById("recipeList");
+        recipeList.innerHTML = "";
+
+        filteredRecipes.forEach(recipe => {
+            const card = document.createElement("div");
+            card.className = "recipe-card";
+            card.innerHTML = `
+                <h3>${recipe.name}</h3>
+                <p>${recipe.description}</p>
+            `;
+            recipeList.appendChild(card);
+        });
+    }
+
+    function filterRecipes() {
+        const query = document.getElementById("searchInput").value.toLowerCase();
+        const filteredRecipes = recipes.filter(recipe =>
+            recipe.name.toLowerCase().includes(query) ||
+            recipe.description.toLowerCase().includes(query)
+        );
+        displayRecipes(filteredRecipes);
+    }
+
+    function logout() {
+        alert("You have been logged out!");
+        window.location.href = "index.html";
+    }
+
+    // Initial display
+    displayRecipes();
+</script>
+
+</body>
+</html>
