@@ -7,14 +7,27 @@
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-      background: #5d95cd1f;
+      background: url('https://res.cloudinary.com/dnil1xzzi/image/upload/v1744278183/staff-cooking-in-restaurant-commercial-kitchen_eropfs.jpg') no-repeat center center fixed;
+      background-size: cover;
       padding: 20px;
       position: relative;
+      
     }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(255, 255, 255, 0.85);
+      z-index: -1;
+    }
+
     h1 {
       text-align: center;
       color: #e63946;
     }
+
     form {
       max-width: 500px;
       margin: 0 auto;
@@ -23,6 +36,7 @@
       border-radius: 12px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
+
     input, select, textarea {
       width: 100%;
       padding: 10px;
@@ -30,6 +44,7 @@
       border: 1px solid #ccc;
       border-radius: 8px;
     }
+
     button {
       background-color: #e63946;
       color: white;
@@ -39,6 +54,7 @@
       cursor: pointer;
       font-size: 1rem;
     }
+
     button:hover {
       background-color: #d62828;
     }
