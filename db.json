@@ -1,0 +1,19 @@
+{
+    "hotelName": "Green Valley Eco Resort",
+    "location": "Wayanad, Kerala",
+    "price": 3200,
+    "imageURL": "https://example.com/image.jpg",
+    "owner": "Meera Nair",
+    "contact": "+91-9090909090",
+    "dishes": [
+      {
+        "name": "Kerala Sadya",
+        "price": 250
+      },
+      {
+        "name": "Appam with Stew",
+        "price": 180
+      }
+    ]
+  }
+  

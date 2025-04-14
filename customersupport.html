@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Customer Support - Foodiez</title>
+  <link rel="icon" href="https://res.cloudinary.com/dnil1xzzi/image/upload/v1743792601/2424721_vnau0b.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #f4f4f4;
+      padding: 40px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 600px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    label {
+      font-weight: 600;
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 5px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Loader */
+    #loader {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(255, 255, 255, 0.8);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .spinner {
+      border: 6px solid #f3f3f3;
+      border-top: 6px solid #007bff;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2><i class="fa-solid fa-headset"></i> Customer Support</h2>
+    <form id="supportForm">
+      <label for="customerName">Your Name</label>
+      <input type="text" id="customerName" required />
+
+      <label for="dishName">Dish Name</label>
+      <input type="text" id="dishName" required />
+
+      <label for="hotelName">Hotel Name</label>
+      <input type="text" id="hotelName" required />
+
+      <label for="issueType">Select an Issue</label>
+      <select id="issueType" required>
+        <option value="">-- Choose an Issue --</option>
+        <option value="Quality Issue">Quality Issue</option>
+        <option value="Wrong Dish Delivered">Wrong Dish Delivered</option>
+        <option value="Missing Item">Missing Item</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <label for="deliveryIssue">Delivery Delay (optional)</label>
+      <input type="text" id="deliveryIssue" placeholder="e.g. 30 minutes late" />
+
+      <label for="suggestion">Your Suggestion / Feedback</label>
+      <textarea id="suggestion" rows="4" placeholder="Describe your feedback..." required></textarea>
+
+      <button type="submit">Submit</button>
+      <p><a href="dashboard.html">back to page?</a></p>
+    </form>
+  </div>
+
+  <!-- Loader -->
+  <div id="loader">
+    <div class="spinner"></div>
+  </div>
+
+  <script>
+    document.getElementById('supportForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById('customerName').value;
+      const dish = document.getElementById('dishName').value;
+      const hotel = document.getElementById('hotelName').value;
+      const issue = document.getElementById('issueType').value;
+      const delay = document.getElementById('deliveryIssue').value;
+      const suggestion = document.getElementById('suggestion').value;
+
+      alert(`Thanks for your feedback, ${name}!\n\nIssue: ${issue}\nHotel: ${hotel}\nDish: ${dish}\nDelayed: ${delay || 'No'}\n\nWe’ll look into it!`);
+
+      // Show loader
+      document.getElementById('loader').style.display = 'flex';
+
+      // Redirect to dashboard after 2 seconds
+      setTimeout(() => {
+        window.location.href = "dashboard.html";
+      }, 2000);
+    });
+  </script>
+
+</body>
+</html>

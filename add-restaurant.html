@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -146,4 +146,179 @@
   </script>
 
 </body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Add Hotel</title>
+  <link rel="icon" href="https://res.cloudinary.com/dnil1xzzi/image/upload/v1743792601/2424721_vnau0b.png">
+  <style>
+    body {
+      background-image: url('https://res.cloudinary.com/dnil1xzzi/image/upload/v1744278183/staff-cooking-in-restaurant-commercial-kitchen_eropfs.jpg');
+      background-size: cover;
+      background-position: center;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .form-container {
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      width: 400px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    #loaderOverlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(255, 255, 255, 0.85);
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #loader {
+      width: 50px;
+      height: 50px;
+      border: 6px solid #ccc;
+      border-top-color: #3498db;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="form-container">
+    <h2>Add Hotel</h2>
+    <input type="text" id="hotelName" placeholder="Hotel Name" />
+    <input type="text" id="location" placeholder="Location" />
+    <input type="number" id="price" placeholder="Price" />
+    <input type="text" id="imageURL" placeholder="Image URL" />
+    <input type="text" id="owner" placeholder="Owner Name" />
+    <input type="text" id="contact" placeholder="Contact" />
+    
+    <select id="dishType">
+      <option value="">Select Dish Type</option>
+      <option value="Veg">Veg</option>
+      <option value="Non-Veg">Non-Veg</option>
+    </select>
+
+    <textarea id="comment" rows="3" placeholder="Additional Comments (optional)"></textarea>
+
+    <button id="submitHotel" type="button">Submit Hotel</button>
+    <p><a href="restro.html">Back to page?</a></div></p>
+  </div>
+
+  <div id="loaderOverlay">
+    <div id="loader"></div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyB02JOyypkO4X7te9bHl7QuTsvY82SjOu0",
+      authDomain: "foodeiz.firebaseapp.com",
+      projectId: "foodeiz",
+      storageBucket: "foodeiz.appspot.com",
+      messagingSenderId: "955078569126",
+      appId: "1:955078569126:web:3f4ae85e6aee546e611867",
+      measurementId: "G-39QZC2NB1E"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const loader = document.getElementById("loaderOverlay");
+
+    document.getElementById("submitHotel").addEventListener("click", async () => {
+      const hotelName = document.getElementById("hotelName").value.trim();
+      const location = document.getElementById("location").value.trim();
+      const price = parseInt(document.getElementById("price").value);
+      const imageURL = document.getElementById("imageURL").value.trim();
+      const owner = document.getElementById("owner").value.trim();
+      const contact = document.getElementById("contact").value.trim();
+      const dishType = document.getElementById("dishType").value;
+      const comment = document.getElementById("comment").value.trim();
+
+      if (!hotelName || !location || !price || !owner || !contact || !dishType) {
+        alert("Please fill all required fields including dish type.");
+        return;
+      }
+
+      loader.style.display = "flex";
+
+      try {
+        await addDoc(collection(db, "hotels"), {
+          hotelName,
+          location,
+          price,
+          imageURL,
+          owner,
+          contact,
+          dishType,
+          comment,
+          dishes: []
+        });
+
+        setTimeout(() => {
+          loader.style.display = "none";
+          alert(`✅ Hotel Added:\n\n🏨 ${hotelName}\n📍 ${location}\n💵 ₹${price}\n🍽️ Dish Type: ${dishType}\n📝 Comment: ${comment || "None"}`);
+          window.location.href = "restro.html";
+        }, 2000);
+
+      } catch (error) {
+        loader.style.display = "none";
+        alert("❌ Error adding hotel: " + error.message);
+      }
+    });
+  </script>
+</body>
 </html>
+
