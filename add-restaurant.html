@@ -1,154 +1,3 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Add Restaurant - Foodiez</title>
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: url('https://res.cloudinary.com/dnil1xzzi/image/upload/v1744278183/staff-cooking-in-restaurant-commercial-kitchen_eropfs.jpg') no-repeat center center fixed;
-      background-size: cover;
-      padding: 20px;
-      position: relative;
-      
-    }
-
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background-color: rgba(255, 255, 255, 0.85);
-      z-index: -1;
-    }
-
-    h1 {
-      text-align: center;
-      color: #e63946;
-    }
-
-    form {
-      max-width: 500px;
-      margin: 0 auto;
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-
-    input, select, textarea {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-    }
-
-    button {
-      background-color: #e63946;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 20px;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-
-    button:hover {
-      background-color: #d62828;
-    }
-
-    .loader-overlay {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(255,255,255,0.9);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      display: none;
-    }
-
-    .loader {
-      border: 8px solid #f3f3f3;
-      border-top: 8px solid #e63946;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-  </style>
-</head>
-<body>
-
-  <div class="loader-overlay" id="loader">
-    <div class="loader"></div>
-  </div>
-
-  <h1>Add Restaurant Item</h1>
-
-  <form id="restaurantForm">
-    <input type="text" id="restaurantName" placeholder="Restaurant Name" required />
-    <input type="text" id="owner" placeholder="Owner Name" required />
-    <input type="tel" id="contact" placeholder="Contact Number" required />
-    <input type="text" id="dish" placeholder="Dish Name" required />
-    <select id="type" required>
-      <option value="">Select Type</option>
-      <option value="Veg">Veg</option>
-      <option value="Non-Veg">Non-Veg</option>
-    </select>
-    <input type="text" id="location" placeholder="Location" required />
-    <input type="number" id="price" placeholder="Average Price (₹)" required />
-    <input type="url" id="image" placeholder="Image URL (optional)" />
-    <textarea id="suggestion" placeholder="Any suggestions (optional)" rows="3"></textarea>
-    <button type="submit">Submit</button>
-  </form>
-
-  <script>
-    const form = document.getElementById("restaurantForm");
-    const loader = document.getElementById("loader");
-
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-
-      const item = {
-        restaurantName: document.getElementById("restaurantName").value.trim(),
-        owner: document.getElementById("owner").value.trim(),
-        contact: document.getElementById("contact").value.trim(),
-        dish: document.getElementById("dish").value.trim(),
-        type: document.getElementById("type").value,
-        location: document.getElementById("location").value.trim(),
-        price: document.getElementById("price").value.trim(),
-        image: document.getElementById("image").value.trim(),
-        suggestion: document.getElementById("suggestion").value.trim()
-      };
-
-      let items = JSON.parse(localStorage.getItem("restaurantItems")) || [];
-      items.push(item);
-      localStorage.setItem("restaurantItems", JSON.stringify(items));
-
-      loader.style.display = "flex";
-
-      setTimeout(() => {
-        loader.style.display = "none";
-        alert("Restaurant item added!");
-        form.reset();
-        window.location.href = "restro.html";
-      }, 5000);
-    });
-  </script>
-
-</body>
-</html> -->
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -182,7 +31,7 @@
       color: #333;
     }
 
-    input, select, textarea {
+    input, select {
       width: 100%;
       padding: 10px;
       margin: 10px 0;
@@ -230,29 +79,41 @@
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
+
+    a {
+      display: block;
+      text-align: center;
+      margin-top: 10px;
+      text-decoration: none;
+      color: #3498db;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
 
   <div class="form-container">
     <h2>Add Hotel</h2>
-    <input type="text" id="hotelName" placeholder="Hotel Name" />
-    <input type="text" id="location" placeholder="Location" />
-    <input type="number" id="price" placeholder="Price" />
+    <input type="text" id="hotelName" placeholder="Hotel Name" required />
+    <input type="text" id="location" placeholder="Location" required />
+    <input type="number" id="price" placeholder="Price" required />
     <input type="text" id="imageURL" placeholder="Image URL" />
-    <input type="text" id="owner" placeholder="Owner Name" />
-    <input type="text" id="contact" placeholder="Contact" />
+    <input type="text" id="owner" placeholder="Owner Name" required />
+    <input type="text" id="contact" placeholder="Contact" required />
     
-    <select id="dishType">
+    <select id="dishType" required>
       <option value="">Select Dish Type</option>
       <option value="Veg">Veg</option>
       <option value="Non-Veg">Non-Veg</option>
     </select>
 
-    <textarea id="comment" rows="3" placeholder="Additional Comments (optional)"></textarea>
+    <input type="text" id="dishName" placeholder="Dish Name" required />
 
     <button id="submitHotel" type="button">Submit Hotel</button>
-    <p><a href="restro.html">Back to page?</a></div></p>
+    <a href="restro.html">Back to page?</a>
   </div>
 
   <div id="loaderOverlay">
@@ -285,10 +146,10 @@
       const owner = document.getElementById("owner").value.trim();
       const contact = document.getElementById("contact").value.trim();
       const dishType = document.getElementById("dishType").value;
-      const comment = document.getElementById("comment").value.trim();
+      const dishName = document.getElementById("dishName").value.trim();
 
-      if (!hotelName || !location || !price || !owner || !contact || !dishType) {
-        alert("Please fill all required fields including dish type.");
+      if (!hotelName || !location || !price || !owner || !contact || !dishType || !dishName) {
+        alert("Please fill all required fields.");
         return;
       }
 
@@ -303,13 +164,13 @@
           owner,
           contact,
           dishType,
-          comment,
-          dishes: []
+          dishName,
+          dishes: [] // You can populate this later
         });
 
         setTimeout(() => {
           loader.style.display = "none";
-          alert(`✅ Hotel Added:\n\n🏨 ${hotelName}\n📍 ${location}\n💵 ₹${price}\n🍽️ Dish Type: ${dishType}\n📝 Comment: ${comment || "None"}`);
+          alert(`✅ Hotel Added:\n\n🏨 ${hotelName}\n📍 ${location}\n💵 ₹${price}\n🍽️ Dish Type: ${dishType}\n🍛 Dish: ${dishName}`);
           window.location.href = "restro.html";
         }, 2000);
 
@@ -321,4 +182,3 @@
   </script>
 </body>
 </html>
-
