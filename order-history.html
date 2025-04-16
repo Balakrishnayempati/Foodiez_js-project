@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order History</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    .order {
+      background: white;
+      padding: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .order p {
+      margin: 5px 0;
+    }
+
+    .order .total {
+      font-weight: bold;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Your Order History</h2>
+
+  <div id="orderHistory"></div>
+
+  <script>
+    const orderHistoryDiv = document.getElementById("orderHistory");
+    const orderHistory = JSON.parse(localStorage.getItem("orderHistory")) || [];
+
+    if (orderHistory.length === 0) {
+      orderHistoryDiv.innerHTML = "<p>No orders found.</p>";
+    } else {
+      orderHistory.forEach(order => {
+        const orderDiv = document.createElement("div");
+        orderDiv.className = "order";
+        orderDiv.innerHTML = `
+          <p><strong>Hotel:</strong> ${order.hotelName}</p>
+          <p><strong>Dish:</strong> ${order.dishName}</p>
+          <p><strong>Address:</strong> ${order.address}</p>
+          <p><strong>Coupon:</strong> ${order.coupon || "N/A"}</p>
+          <p><strong>Tip:</strong> ₹${order.tip}</p>
+          <p class="total">Total Amount: ₹${order.totalAmount}</p>
+          <p><strong>Order Date:</strong> ${new Date(order.orderDate).toLocaleString()}</p>
+        `;
+        orderHistoryDiv.appendChild(orderDiv);
+      });
+    }
+  </script>
+
+</body>
+</html>

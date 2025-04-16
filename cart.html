@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Foodiez Cart</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .cart-item {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .cart-item h3 {
+      margin: 0;
+    }
+    .cart-item p {
+      margin: 5px 0;
+    }
+    .cart-item button {
+      margin-top: 10px;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .remove-btn {
+      background: #e74c3c;
+      color: white;
+    }
+    .order-btn {
+      background: #2ecc71;
+      color: white;
+      margin-left: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Your Cart</h1>
+<div id="cartItems"></div>
+
+<script>
+  const cartItemsDiv = document.getElementById("cartItems");
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  function renderCart() {
+    cartItemsDiv.innerHTML = "";
+    if (cart.length === 0) {
+      cartItemsDiv.innerHTML = "<p>Your cart is empty.</p>";
+      return;
+    }
+
+    cart.forEach((item, index) => {
+      const div = document.createElement("div");
+      div.className = "cart-item";
+      div.innerHTML = `
+        <h3>${item.hotelName}</h3>
+        <p><strong>Dish:</strong> ${item.dishName}</p>
+        <p><strong>Price:</strong> ₹${item.price}</p>
+        <button class="remove-btn" onclick="removeItem(${index})">Remove from Cart</button>
+        <button class="order-btn" onclick="orderItem('${item.hotelName}', '${item.dishName}', ${item.price})">Order Now</button>
+      `;
+      cartItemsDiv.appendChild(div);
+    });
+  }
+
+  function removeItem(index) {
+    cart.splice(index, 1);
+    alert("Remove from cart")
+    localStorage.setItem("cart", JSON.stringify(cart));
+    renderCart();
+  }
+
+  function orderItem(hotelName, dishName, price) {
+    alert(`Order Placed for:\n${hotelName} - ${dishName} - ₹${price}`);
+    // You can clear cart or handle payment logic here
+  }
+
+  renderCart();
+</script>
+
+</body>
+</html>

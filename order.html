@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Order Now</title>
+  <!-- Updated Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-dTLkPx1Ry+tIny1nZK+FzV7aZkF4yoh2CxYz0z6ur2x1cmcVf4qVUZ5J1U/zJrK3NkUXXz2NwZFa4CzThIR3sw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+      margin: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      padding: 30px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: bold;
+      margin-top: 10px;
+      display: block;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      font-size: 16px;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .button-group button {
+      padding: 10px 20px;
+      border: none;
+      color: white;
+      font-weight: bold;
+      background-color: #3498db;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 48%;
+    }
+
+    .button-group button:hover {
+      background-color: #2980b9;
+    }
+
+    .total-section {
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Complete Your Order</h2>
+
+    <div id="orderDetails"></div>
+
+    <label for="address">Your Address</label>
+    <textarea id="address" placeholder="Enter your address here"></textarea>
+
+    <label for="coupon">Coupon Code (optional)</label>
+    <input type="text" id="coupon" placeholder="Enter coupon code if you have one">
+
+    <label for="tip">Tip Amount (optional)</label>
+    <input type="number" id="tip" placeholder="Enter tip amount">
+
+    <!-- Payment Method Options -->
+    <label for="paymentMethod">Choose Payment Method</label>
+    <select id="paymentMethod">
+      <option value="card">💳 Credit/Debit Card</option>
+      <option value="upi">📱 UPI</option>
+      <option value="phonepay">📲 PhonePe</option>
+      <option value="googlepay">🧾 Google Pay</option>
+      <option value="paytm">💵 Paytm</option>
+      <option value="cash">🤝 Cash on Delivery</option>
+    </select>
+
+    <!-- Total Section -->
+    <div class="total-section" id="totalAmount"></div>
+
+    <!-- Buttons -->
+    <div class="button-group">
+      <button onclick="placeOrder()">Place Order</button>
+      <button onclick="cancelOrder()">Cancel</button>
+    </div>
+  </div>
+
+  <script>
+    const currentOrder = JSON.parse(localStorage.getItem("currentOrder"));
+    const orderDetailsDiv = document.getElementById("orderDetails");
+
+    if (currentOrder) {
+      orderDetailsDiv.innerHTML = `
+        <p><strong>Hotel:</strong> ${currentOrder.hotelName}</p>
+        <p><strong>Dish:</strong> ${currentOrder.dishName}</p>
+        <p><strong>Price:</strong> ₹${currentOrder.price}</p>
+      `;
+    }
+
+    function updateTotal() {
+      const tip = parseFloat(document.getElementById("tip").value) || 0;
+      const totalAmount = currentOrder.price + tip;
+      document.getElementById("totalAmount").innerText = `Total Amount: ₹${totalAmount.toFixed(2)}`;
+    }
+
+    document.getElementById("tip").addEventListener("input", updateTotal);
+    document.getElementById("coupon").addEventListener("input", updateTotal);
+
+    function placeOrder() {
+      const address = document.getElementById("address").value;
+      const coupon = document.getElementById("coupon").value;
+      const tip = document.getElementById("tip").value || 0;
+      const paymentMethod = document.getElementById("paymentMethod").value;
+
+      if (!address) {
+        alert("Please enter your address.");
+        return;
+      }
+
+      const order = {
+        ...currentOrder,
+        address,
+        coupon,
+        tip: parseFloat(tip),
+        paymentMethod,
+        totalAmount: currentOrder.price + parseFloat(tip),
+        orderDate: new Date().toISOString(),
+      };
+
+      localStorage.setItem("tempOrder", JSON.stringify(order));
+
+      const paymentLinks = {
+        card: "https://i.imgur.com/n1A1G5F.png",
+        upi: "https://i.imgur.com/YOUR_UPI_QR.png",
+        phonepay: "https://i.imgur.com/YOUR_PHONEPE_QR.png",
+        googlepay: "https://i.imgur.com/YOUR_GOOGLEPAY_QR.png",
+        paytm: "https://i.imgur.com/YOUR_PAYTM_QR.png",
+        cash: null
+      };
+
+      if (paymentMethod === "cash") {
+        saveOrderAndRedirect();
+      } else {
+        const link = paymentLinks[paymentMethod];
+        if (link) {
+          window.open(link, "_blank");
+          setTimeout(() => {
+            saveOrderAndRedirect();
+          }, 5000); // Simulate 5 seconds payment time
+        } else {
+          alert("Invalid payment method.");
+        }
+      }
+    }
+
+    function saveOrderAndRedirect() {
+      const tempOrder = JSON.parse(localStorage.getItem("tempOrder"));
+      if (tempOrder) {
+        let orderHistory = JSON.parse(localStorage.getItem("orderHistory")) || [];
+        orderHistory.push(tempOrder);
+        localStorage.setItem("orderHistory", JSON.stringify(orderHistory));
+        localStorage.removeItem("tempOrder");
+        window.location.href = "order-history.html";
+      }
+    }
+
+    function cancelOrder() {
+      window.location.href = "dashboard.html";
+    }
+
+    updateTotal();
+  </script>
+
+</body>
+</html>

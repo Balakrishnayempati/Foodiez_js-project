@@ -27,6 +27,18 @@
       flex-wrap: wrap;
     }
 
+    .logo-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 20px;
+    }
+
+    .logo-title img {
+      width: 40px;
+      height: 40px;
+    }
+
     nav {
       display: flex;
       gap: 20px;
@@ -174,7 +186,7 @@
       margin-top: 8px;
     }
 
-    .card-body .btn-group {
+    .btn-group {
       display: flex;
       justify-content: space-between;
       margin-top: 10px;
@@ -237,12 +249,15 @@
 <body>
 
   <header>
-    <div>Foodiez Dashboard</div>
+    <div class="logo-title">
+      <img src="https://res.cloudinary.com/dnil1xzzi/image/upload/v1743792601/2424721_vnau0b.png" alt="logo" />
+      <span>Foodiez Dashboard</span>
+    </div>
     <nav>
       <a href="#">Home</a>
-      <a href="#">Dishes</a>
-      <a href="#">Cart</a>
-      <a href="#">Order History</a>
+      <a href="#">Recipes</a>
+      <a href="cart.html">Cart (<span id="cartCount">0</span>)</a>
+      <a href="order-history.html">Order History</a>
       <a href="index.html">Back to page</a>
       <div class="nav-search">
         <input type="text" id="searchDish" placeholder="Search Hotel or Dish...">
@@ -319,13 +334,23 @@
       });
     }
 
-    function addToCart(hotelName, dishName, price) {
-      alert(`Added to Cart:\n${hotelName} - ${dishName} - ₹${price}`);
+    window.addToCart = function(hotelName, dishName, price) {
+      const cartItem = { hotelName, dishName, price };
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cart.push(cartItem);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      updateCartCount();
+      if (confirm(`Added to Cart:\n${hotelName} - ${dishName} - ₹${price}\n\nGo to Cart?`)) {
+        window.location.href = "cart.html";
+      }
     }
 
-    function orderNow(hotelName, dishName, price) {
-      alert(`Order Placed for:\n${hotelName} - ${dishName} - ₹${price}`);
-    }
+    window.orderNow = function(hotelName, dishName, price) {
+  const orderDetails = { hotelName, dishName, price };
+  localStorage.setItem("currentOrder", JSON.stringify(orderDetails));
+  window.location.href = "order.html";
+}
+
 
     window.filterByDish = function () {
       const input = document.getElementById("searchDish").value.toLowerCase();
@@ -336,7 +361,19 @@
       renderHotels(filtered);
     };
 
+    document.getElementById("searchDish").addEventListener("keypress", function (e) {
+      if (e.key === "Enter") {
+        filterByDish();
+      }
+    });
+
+    function updateCartCount() {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      document.getElementById("cartCount").textContent = cart.length;
+    }
+
     loadHotels();
+    updateCartCount();
   </script>
 
   <script>
