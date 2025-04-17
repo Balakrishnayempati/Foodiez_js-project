@@ -117,7 +117,7 @@
 <h1>Your Cart</h1>
 <div id="cartItems"></div>
 
-<!-- Popup -->
+
 <div class="popup-overlay" id="popupOverlay">
   <div class="popup">
     <h2>Enter Delivery Details</h2>
@@ -139,7 +139,7 @@
   </div>
 </div>
 
-<!-- Spinner -->
+
 <div class="spinner" id="spinner">
   <div></div>
   <span>Placing your order...</span>
@@ -192,7 +192,7 @@
     popupOverlay.style.display = "flex";
     tipInput.value = "";
     couponInput.value = "";
-    updateTotal(); // show price when popup opens
+    updateTotal(); 
   }
 
   function closePopup() {
@@ -214,7 +214,7 @@
 
     const coupon = couponInput.value.trim().toUpperCase();
     if (coupon === "FOODIE10") {
-      total *= 0.9; // Apply 10% discount
+      total *= 0.9; 
     }
 
     totalDisplay.textContent = `Total: ₹${total.toFixed(2)}`;

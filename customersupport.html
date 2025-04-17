@@ -75,7 +75,7 @@
       background-color: #0056b3;
     }
 
-    /* Loader */
+   
     #loader {
       display: none;
       position: fixed;
@@ -136,7 +136,7 @@
     </form>
   </div>
 
-  <!-- Loader -->
+ 
   <div id="loader">
     <div class="spinner"></div>
   </div>
@@ -154,10 +154,10 @@
 
       alert(`Thanks for your feedback, ${name}!\n\nIssue: ${issue}\nHotel: ${hotel}\nDish: ${dish}\nDelayed: ${delay || 'No'}\n\nWe’ll look into it!`);
 
-      // Show loader
+     
       document.getElementById('loader').style.display = 'flex';
 
-      // Redirect to dashboard after 2 seconds
+      
       setTimeout(() => {
         window.location.href = "dashboard.html";
       }, 2000);

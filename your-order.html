@@ -52,7 +52,7 @@
   <div id="orderHistory"></div>
 
   <script>
-    // Show success notification if redirected with success=true
+    
     const params = new URLSearchParams(window.location.search);
     const success = params.get("success");
 
@@ -63,7 +63,7 @@
       document.getElementById("notificationContainer").appendChild(notificationDiv);
     }
 
-    // Load order history
+   
     const orderHistoryDiv = document.getElementById("orderHistory");
     const orderHistory = JSON.parse(localStorage.getItem("orderHistory")) || [];
 

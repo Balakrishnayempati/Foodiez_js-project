@@ -6,8 +6,7 @@
   <title>Dashboard</title>
   <link rel="icon" href="https://res.cloudinary.com/dnil1xzzi/image/upload/v1743792601/2424721_vnau0b.png">
   <style>
-    /* [Same CSS as your previous version] */
-    /* Kept intact for layout, responsiveness, and styling */
+    
     body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f4f4f4; }
     header { background-color: #000; color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; flex-wrap: wrap; box-shadow: 0 2px 10px rgba(0,0,0,0.15); font-size: 24px; }
     .logo-title { display: flex; align-items: center; gap: 10px; font-size: 20px; }
@@ -40,7 +39,7 @@
     .order-btn { background-color: #3498db; }
     .order-btn:hover { background-color: #2980b9; }
 
-    /* Responsive styles skipped for brevity — they are same as before */
+    
   </style>
 </head>
 <body>
@@ -129,7 +128,7 @@
       hotelList.appendChild(card);
     });
 
-    // Event listeners for safe attribute-based buttons
+   
     document.querySelectorAll(".add-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         const hotel = decodeURIComponent(btn.dataset.hotel);
