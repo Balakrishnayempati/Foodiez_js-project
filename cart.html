@@ -19,12 +19,8 @@
       margin-bottom: 10px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
-    .cart-item h3 {
-      margin: 0;
-    }
-    .cart-item p {
-      margin: 5px 0;
-    }
+    .cart-item h3 { margin: 0; }
+    .cart-item p { margin: 5px 0; }
     .cart-item button {
       margin-top: 10px;
       padding: 8px 12px;
@@ -42,6 +38,77 @@
       color: white;
       margin-left: 10px;
     }
+
+    .popup-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .popup {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+    .popup input, .popup select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .popup button {
+      padding: 10px 15px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .confirm-btn { background: #3498db; color: white; }
+    .cancel-btn { background: gray; color: white; margin-left: 10px; }
+    .total-display {
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 10px;
+      color: green;
+      text-align: right;
+    }
+
+    .spinner {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(255,255,255,0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      flex-direction: column;
+    }
+    .spinner div {
+      border: 6px solid #ccc;
+      border-top: 6px solid #3498db;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+    }
+    .spinner span {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #555;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
@@ -49,9 +116,48 @@
 <h1>Your Cart</h1>
 <div id="cartItems"></div>
 
+<!-- Popup -->
+<div class="popup-overlay" id="popupOverlay">
+  <div class="popup">
+    <h2>Enter Delivery Details</h2>
+    <input type="text" id="addressInput" placeholder="Delivery Address" />
+    <input type="text" id="pincodeInput" placeholder="Pincode" />
+    <select id="paymentMethod">
+      <option value="">Select Payment Method</option>
+      <option value="UPI">UPI</option>
+      <option value="Cash on Delivery">Cash on Delivery</option>
+      <option value="Credit Card">Credit Card</option>
+    </select>
+    <input type="text" id="couponInput" placeholder="Enter Coupon Code (optional)" />
+    <input type="number" id="tipInput" placeholder="Tip Amount (optional)" oninput="updateTotal()" />
+    <div class="total-display" id="totalDisplay">Total: ₹0.00</div>
+    <div style="text-align:right;">
+      <button class="confirm-btn" onclick="confirmOrder()">Confirm</button>
+      <button class="cancel-btn" onclick="closePopup()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Spinner -->
+<div class="spinner" id="spinner">
+  <div></div>
+  <span>Placing your order...</span>
+</div>
+
 <script>
   const cartItemsDiv = document.getElementById("cartItems");
+  const popupOverlay = document.getElementById("popupOverlay");
+  const spinner = document.getElementById("spinner");
+
+  const addressInput = document.getElementById("addressInput");
+  const pincodeInput = document.getElementById("pincodeInput");
+  const paymentSelect = document.getElementById("paymentMethod");
+  const couponInput = document.getElementById("couponInput");
+  const tipInput = document.getElementById("tipInput");
+  const totalDisplay = document.getElementById("totalDisplay");
+
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  let currentOrderIndex = null;
 
   function renderCart() {
     cartItemsDiv.innerHTML = "";
@@ -59,7 +165,6 @@
       cartItemsDiv.innerHTML = "<p>Your cart is empty.</p>";
       return;
     }
-
     cart.forEach((item, index) => {
       const div = document.createElement("div");
       div.className = "cart-item";
@@ -68,7 +173,7 @@
         <p><strong>Dish:</strong> ${item.dishName}</p>
         <p><strong>Price:</strong> ₹${item.price}</p>
         <button class="remove-btn" onclick="removeItem(${index})">Remove from Cart</button>
-        <button class="order-btn" onclick="orderItem('${item.hotelName}', '${item.dishName}', ${item.price})">Order Now</button>
+        <button class="order-btn" onclick="openPopup(${index})">Order Now</button>
       `;
       cartItemsDiv.appendChild(div);
     });
@@ -76,14 +181,88 @@
 
   function removeItem(index) {
     cart.splice(index, 1);
-    alert("Remove from cart")
     localStorage.setItem("cart", JSON.stringify(cart));
     renderCart();
+    alert("Removed from cart");
   }
 
-  function orderItem(hotelName, dishName, price) {
-    alert(`Order Placed for:\n${hotelName} - ${dishName} - ₹${price}`);
-    // You can clear cart or handle payment logic here
+  function openPopup(index) {
+    currentOrderIndex = index;
+    popupOverlay.style.display = "flex";
+    tipInput.value = "";
+    couponInput.value = "";
+    updateTotal(); // show price when popup opens
+  }
+
+  function closePopup() {
+    popupOverlay.style.display = "none";
+    addressInput.value = "";
+    pincodeInput.value = "";
+    paymentSelect.value = "";
+    couponInput.value = "";
+    tipInput.value = "";
+    totalDisplay.textContent = "Total: ₹0.00";
+    currentOrderIndex = null;
+  }
+
+  function updateTotal() {
+    const item = cart[currentOrderIndex];
+    let price = parseFloat(item.price);
+    let tip = parseFloat(tipInput.value) || 0;
+    let total = price + tip;
+
+    const coupon = couponInput.value.trim().toUpperCase();
+    if (coupon === "FOODIE10") {
+      total *= 0.9; // Apply 10% discount
+    }
+
+    totalDisplay.textContent = `Total: ₹${total.toFixed(2)}`;
+  }
+
+  function confirmOrder() {
+    const address = addressInput.value.trim();
+    const pincode = pincodeInput.value.trim();
+    const payment = paymentSelect.value;
+    const coupon = couponInput.value.trim().toUpperCase() || "N/A";
+    const tip = parseFloat(tipInput.value) || 0;
+
+    if (!address || !pincode || !payment) {
+      alert("Please fill all details before proceeding.");
+      return;
+    }
+
+    const item = cart[currentOrderIndex];
+    let total = parseFloat(item.price) + tip;
+    if (coupon === "FOODIE10") total *= 0.9;
+
+    const order = {
+      ...item,
+      address,
+      pincode,
+      paymentMethod: payment,
+      coupon,
+      tip,
+      totalAmount: total.toFixed(2),
+      orderDate: new Date().toISOString()
+    };
+
+    const history = JSON.parse(localStorage.getItem("orderHistory")) || [];
+    history.push(order);
+    localStorage.setItem("orderHistory", JSON.stringify(history));
+
+    cart.splice(currentOrderIndex, 1);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    renderCart();
+    closePopup();
+
+    spinner.style.display = "flex";
+    setTimeout(() => {
+      spinner.innerHTML = `<span>✅ Thank you for your order. We’ll deliver it soon!</span>`;
+      setTimeout(() => {
+        spinner.style.display = "none";
+        window.location.href = "order-history.html";
+      }, 2000);
+    }, 2000);
   }
 
   renderCart();

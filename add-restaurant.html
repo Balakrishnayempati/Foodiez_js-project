@@ -165,14 +165,12 @@
           contact,
           dishType,
           dishName,
-          dishes: [] // You can populate this later
+          dishes: []
         });
 
-        setTimeout(() => {
-          loader.style.display = "none";
-          alert(`✅ Hotel Added:\n\n🏨 ${hotelName}\n📍 ${location}\n💵 ₹${price}\n🍽️ Dish Type: ${dishType}\n🍛 Dish: ${dishName}`);
-          window.location.href = "restro.html";
-        }, 2000);
+        loader.style.display = "none";
+        alert(`✅ Hotel Added:\n\n🏨 ${hotelName}\n📍 ${location}\n💵 ₹${price}\n🍽️ Dish Type: ${dishType}\n🍛 Dish: ${dishName}`);
+        window.location.href = "restro.html";
 
       } catch (error) {
         loader.style.display = "none";
