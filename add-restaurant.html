@@ -98,7 +98,7 @@
   <div class="form-container">
     <h2>Add Hotel</h2>
     <input type="text" id="hotelName" placeholder="Hotel Name" required />
-    <input type="text" id="location" placeholder="Location" required />
+    <input type="text" id="location" placeholder="e.g. Hitech city, Madhapur - 500081" required />
     <input type="number" id="price" placeholder="Price" required />
     <input type="text" id="imageURL" placeholder="Image URL" />
     <input type="text" id="owner" placeholder="Owner Name" required />
@@ -138,6 +138,10 @@
     const db = getFirestore(app);
     const loader = document.getElementById("loaderOverlay");
 
+    function isAlphaOnly(str) {
+      return /^[A-Za-z\s]+$/.test(str);
+    }
+
     document.getElementById("submitHotel").addEventListener("click", async () => {
       const hotelName = document.getElementById("hotelName").value.trim();
       const location = document.getElementById("location").value.trim();
@@ -150,6 +154,17 @@
 
       if (!hotelName || !location || !price || !owner || !contact || !dishType || !dishName) {
         alert("Please fill all required fields.");
+        return;
+      }
+
+      // Validate hotel and owner name
+      if (!isAlphaOnly(hotelName)) {
+        alert("Hotel Name must contain only letters (A-Z or a-z) and spaces.");
+        return;
+      }
+
+      if (!isAlphaOnly(owner)) {
+        alert("Owner Name must contain only letters (A-Z or a-z) and spaces.");
         return;
       }
 

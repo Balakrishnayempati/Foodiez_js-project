@@ -128,7 +128,6 @@
       hotelList.appendChild(card);
     });
 
-   
     document.querySelectorAll(".add-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         const hotel = decodeURIComponent(btn.dataset.hotel);
@@ -163,11 +162,23 @@
     window.location.href = "order.html";
   }
 
+  // ✅ UPDATED: Filter function allowing only A-Z/a-z and space
   window.filterByDish = function () {
-    const input = document.getElementById("searchDish").value.toLowerCase();
+    const inputElement = document.getElementById("searchDish");
+    const input = inputElement.value.trim();
+
+    const regex = /^[A-Za-z\s]+$/;
+
+    if (!regex.test(input)) {
+      alert("Please enter only letters (A-Z or a-z) for search.");
+      inputElement.value = "";
+      inputElement.focus();
+      return;
+    }
+
     const filtered = allHotels.filter(hotel =>
-      hotel.dishName.toLowerCase().includes(input) ||
-      hotel.hotelName.toLowerCase().includes(input)
+      hotel.dishName.toLowerCase().includes(input.toLowerCase()) ||
+      hotel.hotelName.toLowerCase().includes(input.toLowerCase())
     );
     renderHotels(filtered);
   };
@@ -187,26 +198,6 @@
   updateCartCount();
 </script>
 
-<script>
-  let currentSlide = 0;
-  const slides = document.getElementById("slides");
-
-  function showSlide(index) {
-    const totalSlides = slides.children.length;
-    currentSlide = (index + totalSlides) % totalSlides;
-    slides.style.transform = `translateX(-${currentSlide * 100}%)`;
-  }
-
-  function nextSlide() {
-    showSlide(currentSlide + 1);
-  }
-
-  function prevSlide() {
-    showSlide(currentSlide - 1);
-  }
-
-  setInterval(nextSlide, 4000);
-</script>
 
 </body>
 </html>
