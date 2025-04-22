@@ -138,8 +138,11 @@
     const db = getFirestore(app);
     const loader = document.getElementById("loaderOverlay");
 
+    // Enhanced validation
     function isAlphaOnly(str) {
-      return /^[A-Za-z\s]+$/.test(str);
+      const cleaned = str.replace(/\s+/g, ' ').trim();
+      console.log("Validating:", cleaned);
+      return /^[A-Za-z\s]+$/.test(cleaned);
     }
 
     document.getElementById("submitHotel").addEventListener("click", async () => {
@@ -153,18 +156,17 @@
       const dishName = document.getElementById("dishName").value.trim();
 
       if (!hotelName || !location || !price || !owner || !contact || !dishType || !dishName) {
-        alert("Please fill all required fields.");
+        alert("❗ Please fill all required fields.");
         return;
       }
 
-      // Validate hotel and owner name
       if (!isAlphaOnly(hotelName)) {
-        alert("Hotel Name must contain only letters (A-Z or a-z) and spaces.");
+        alert("❗ Hotel Name must contain only letters and spaces.");
         return;
       }
 
       if (!isAlphaOnly(owner)) {
-        alert("Owner Name must contain only letters (A-Z or a-z) and spaces.");
+        alert("❗ Owner Name must contain only letters and spaces.");
         return;
       }
 
